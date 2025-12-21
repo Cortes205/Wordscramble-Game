@@ -1,15 +1,20 @@
 <?php
+/**
+ * Routes for local jax requests
+ */
 
+use App\Http\Controllers\Auth\UserController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('home');
+Route::prefix("/jax")->middleware("guest")->group(function() {
+    Route::prefix("/user")->group(function() {
+        Route::post("/login", [UserController::class, "login"]);
+        Route::post("/register", [UserController::class, "register"]);
+    });
+});
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+Route::prefix("/jax")->middleware("auth")->group(function () {
+    Route::prefix("/user")->group(function () {
+        Route::post("/logout", [UserController::class, "logout"]);
+    });
+});

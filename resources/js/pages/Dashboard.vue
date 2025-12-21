@@ -1,47 +1,45 @@
-<script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard } from '@/routes';
-import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+<!-- 
+    User dashboard page
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard().url,
-    },
-];
-</script>
+    @author     Alan Cortes
+    @version    1.0.0
+-->
 
 <template>
-    <Head title="Dashboard" />
-
-    <AppLayout :breadcrumbs="breadcrumbs">
-        <div
-            class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
-        >
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div
-                    class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
-                >
-                    <PlaceholderPattern />
-                </div>
-                <div
-                    class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
-                >
-                    <PlaceholderPattern />
-                </div>
-                <div
-                    class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
-                >
-                    <PlaceholderPattern />
-                </div>
-            </div>
-            <div
-                class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border"
-            >
-                <PlaceholderPattern />
-            </div>
+    <div>
+        <div style="text-align: right;">
+            <el-button size="small" type="primary" @click="onLogout">Logout</el-button>
         </div>
-    </AppLayout>
+    </div>
 </template>
+
+<script setup>
+import { getCurrentInstance } from "vue";
+
+const { proxy } = getCurrentInstance()
+
+const props = defineProps({
+    _csrfToken: {
+        type: String,
+        required: true,
+    },
+    user: {
+        type: Object,
+        required: true,
+    },
+})
+
+function onLogout() {
+    proxy.$ajax
+        .post("/jax/user/logout", { _csrfToken: props._csrfToken })
+        .then(res => {
+            location.reload()
+        })
+        .catch(err => {
+
+        })
+        .finally(() => {
+
+        })
+}
+</script>
