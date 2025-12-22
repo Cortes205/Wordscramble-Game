@@ -31,8 +31,8 @@ class UserController extends Controller {
      * @return array
      */
     public function login(Request $request) {
-        $csrfToken = $request->get("_csrfToken", "");
-        $credentials = $request->get("credentials", []);
+        $csrfToken = $request->get("_csrfToken", "") ?? "";
+        $credentials = $request->get("credentials", []) ?? [];
 
         $this->validateCsrf($csrfToken);
 
@@ -49,8 +49,8 @@ class UserController extends Controller {
      * @return array
      */
     public function register(Request $request) {
-        $csrfToken = $request->get("_csrfToken", "");
-        $credentials = $request->get("credentials", []);
+        $csrfToken = $request->get("_csrfToken", "") ?? "";
+        $credentials = $request->get("credentials", []) ?? [];
 
         $this->validateCsrf($csrfToken);
 
@@ -67,7 +67,7 @@ class UserController extends Controller {
      * @return array
      */
     public function logout(Request $request) {
-        $csrfToken = $request->get("_csrfToken", "");
+        $csrfToken = $request->get("_csrfToken", "") ?? "";
         $this->validateCsrf($csrfToken);
 
         $output = $this->service->logout();

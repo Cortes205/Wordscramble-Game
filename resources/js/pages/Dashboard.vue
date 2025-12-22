@@ -7,14 +7,32 @@
 
 <template>
     <div>
-        <div style="text-align: right;">
-            <el-button size="small" type="primary" @click="onLogout">Logout</el-button>
+        <div>
+            <UserMenu 
+                :_csrf-token="_csrfToken"
+            />
+        </div>
+
+        <div style="padding: 0 2%">
+            <h1>{{ user.name.toUpperCase() }}</h1>
+        </div>
+
+        <div>
+            <Stats
+                :items="items"
+            />
+        </div>
+
+        <div class="al-center">
+            <el-button type="success" @click="onPlay">Play Game</el-button>
         </div>
     </div>
 </template>
 
 <script setup>
-import { getCurrentInstance } from "vue";
+import { getCurrentInstance, onMounted, ref } from "vue";
+import UserMenu from "@/components/ui/userMenu.vue";
+import Stats from "@/components/stats.vue"
 
 const { proxy } = getCurrentInstance()
 
@@ -29,17 +47,23 @@ const props = defineProps({
     },
 })
 
-function onLogout() {
-    proxy.$ajax
-        .post("/jax/user/logout", { _csrfToken: props._csrfToken })
-        .then(res => {
-            location.reload()
-        })
-        .catch(err => {
+const items = ref([])
 
-        })
-        .finally(() => {
+onMounted(() => {
+    getStats()
+})
 
-        })
+function getStats() {
+    // TODO: Get Stats
+}
+
+function onPlay() {
+    window.open("/play", "_self");
 }
 </script>
+
+<style>
+.al-center {
+    text-align: center;
+}
+</style>

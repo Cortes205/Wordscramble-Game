@@ -5,24 +5,26 @@
     @version    1.0.0
 -->
 <template>
-    <div class="title-container">
-        <div>
-            <h1>Wordscramble</h1>
-            <el-button round type="primary" @click="isLoginVisible = true">Start</el-button>
+    <div>
+        <div class="title-container">
+            <div>
+                <h1>Wordscramble</h1>
+                <el-button round type="primary" @click="isLoginVisible = true">Start</el-button>
+            </div>
         </div>
-    </div>
 
-    <div v-if="isLoginVisible">
-        <el-dialog
-            v-model="isLoginVisible"
-            title="Sign In"
-        >
-            <Login
-                :_csrf-token="_csrfToken"
-                @close="isLoginVisible = false"
+        <div v-if="isLoginVisible">
+            <el-dialog
+                v-model="isLoginVisible"
+                title="Sign In"
             >
-            </Login>
-        </el-dialog>
+                <Login
+                    :_csrf-token="_csrfToken"
+                    @close="isLoginVisible = false"
+                >
+                </Login>
+            </el-dialog>
+        </div>
     </div>
 </template>
 
