@@ -20,8 +20,6 @@ createInertiaApp({
         const user = props?.initialPage?.props?.auth?.user
         props.user = { id: user?.id, name: user?.name };
 
-        props._csrfToken = document.querySelector("meta[name='_csrfToken']")?.content
-
         const app = createApp({ render: () => h(App, props) })
             .use(plugin)
 

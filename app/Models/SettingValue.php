@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\Scopes\ActiveScope;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class SettingValue extends Model
+{
+    /** @use HasFactory<\Database\Factories\SettingValueFactory> */
+    use HasFactory;
+
+    protected $table = "db_words.users_settings_values";
+
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope(new ActiveScope);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, "fk_user_id", "id");
+    }
+
+    public function settingOption() {
+        return $this->belongsTo(SettingOption::class, "fk_option_id", "id");
+    }
+}

@@ -6,21 +6,26 @@
 -->
 
 <template>
-    <div style="padding: 2%">
+    <div v-if="items?.length" style="padding: 2%">
         <CardList
             :items="items"
             height="500px"
         >
             <template #header="{ item }">
-                {{ item.name }}
+                {{ item.title }}
             </template>
             <template #body="{ item }">
-                {{ item.title }}
+                {{ item.name }}
             </template>
             <template #footer="{ item }">
                 {{ item.desc }}
             </template>
         </CardList>
+    </div>
+    <div v-else style="padding: 2%">
+        <h3>
+            No stats yet
+        </h3>
     </div>
 </template>
 

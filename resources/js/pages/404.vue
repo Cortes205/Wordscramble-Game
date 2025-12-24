@@ -8,7 +8,7 @@
     <div>
         <div>
             <UserMenu 
-                :_csrf-token="_csrfToken"
+                :is-error-page="true"
             />
         </div>
 
@@ -21,13 +21,6 @@
 
 <script setup>
 import UserMenu from "@/components/ui/userMenu.vue";
-
-const props = defineProps({
-    _csrfToken: {
-        type: String,
-        required: true,
-    },
-})
 
 function onReturn() {
     window.open("/", "_self");

@@ -10,7 +10,7 @@
             ref="formRef" 
             :model="form" 
             :rules="formRules" 
-            label-width="auto" 
+            label-width="150px" 
             style="max-width: 600px"
         >
             <el-form-item label="Username" prop="username">
@@ -36,13 +36,6 @@
 import { ref, getCurrentInstance, reactive } from "vue"
 
 const { proxy } = getCurrentInstance()
-
-const props = defineProps({
-    _csrfToken: {
-        type: String,
-        required: true,
-    },
-})
 
 const emit = defineEmits(["close"])
 const registerMode = ref(false)
@@ -79,7 +72,7 @@ function onSubmit() {
             const url = "/jax/user/" + (registerMode.value ? "register" : "login")
 
             proxy.$ajax
-                .post(url, { _csrfToken: props._csrfToken, credentials: form })
+                .post(url, { credentials: form })
                 .then(res => {
                     close()
                     location.reload()

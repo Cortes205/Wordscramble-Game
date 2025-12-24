@@ -15,6 +15,7 @@ Route::prefix("/jax")->middleware("guest")->group(function() {
 
 Route::prefix("/jax")->middleware("auth")->group(function () {
     Route::prefix("/user")->group(function () {
+        Route::get("/profile", [UserController::class, "profile"]);
         Route::post("/logout", [UserController::class, "logout"]);
     });
 });

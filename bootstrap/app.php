@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
-
+        $middleware->validateCsrfTokens();
         $middleware->web(append: [
             HandleAppearance::class,
             HandleInertiaRequests::class,
@@ -37,7 +37,6 @@ return Application::configure(basePath: dirname(__DIR__))
                     return Inertia::render("404");
                 case 401:
                 case 419:
-                    if (Auth::getUser()) Auth::logout();
                     return redirect("/");
             }
 

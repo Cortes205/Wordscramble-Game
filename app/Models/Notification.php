@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\Scopes\ActiveScope;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Notification extends Model
+{
+    /** @use HasFactory<\Database\Factories\NotificationFactory> */
+    use HasFactory;
+
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope(new ActiveScope);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, "fk_user_id", "id");
+    }
+}

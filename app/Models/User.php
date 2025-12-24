@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,4 +33,17 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope(new ActiveScope);
+    }
+
+    /**
+     * Return a list of all the latest stats
+     * @return ?\Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stats() {
+        return $this->hasMany(Stat::class, "fk_user_id", "id");
+    }
 }

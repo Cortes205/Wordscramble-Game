@@ -9,7 +9,7 @@
         <div class="title-container">
             <div>
                 <h1>Wordscramble</h1>
-                <el-button round type="primary" @click="isLoginVisible = true">Start</el-button>
+                <el-button round type="primary" @click="openForm">Start</el-button>
             </div>
         </div>
 
@@ -19,10 +19,8 @@
                 title="Sign In"
             >
                 <Login
-                    :_csrf-token="_csrfToken"
-                    @close="isLoginVisible = false"
-                >
-                </Login>
+                    @close="close"
+                />
             </el-dialog>
         </div>
     </div>
@@ -32,14 +30,15 @@
 import { ref } from "vue"
 import Login from "../components/forms/login.vue"
 
-const props = defineProps({
-    _csrfToken: {
-        type: String,
-        required: true,
-    },
-})
-
 const isLoginVisible = ref(false)
+
+function openForm() {
+    isLoginVisible.value = true
+}
+
+function close() {
+    isLoginVisible.value = false
+}
 </script>
 
 <style scoped>

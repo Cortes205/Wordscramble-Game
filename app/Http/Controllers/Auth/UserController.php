@@ -19,8 +19,23 @@ class UserController extends Controller {
 
     private UserService $service;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->service = new UserService();
+    }
+
+    /**
+     * Route: /profile - Get the current user's profile
+     * 
+     * @param int $userId
+     * 
+     * @return array
+     */
+    public function profile()
+    {
+        $user = $this->getUser();
+        $output = $this->service->profile($user);
+        return $this->response($output, "User's profile retrieved");
     }
 
     /**
@@ -30,14 +45,13 @@ class UserController extends Controller {
      * 
      * @return array
      */
-    public function login(Request $request) {
-        $csrfToken = $request->get("_csrfToken", "") ?? "";
+    public function login(Request $request)
+    {
         $credentials = $request->get("credentials", []) ?? [];
-
-        $this->validateCsrf($csrfToken);
 
         $output = $this->service->login($credentials);
         $request->session()->regenerate();
+        $request->session()->regenerateToken();
         return $this->response($output, "User authenticated");
     }
 
@@ -48,14 +62,13 @@ class UserController extends Controller {
      * 
      * @return array
      */
-    public function register(Request $request) {
-        $csrfToken = $request->get("_csrfToken", "") ?? "";
+    public function register(Request $request)
+    {
         $credentials = $request->get("credentials", []) ?? [];
-
-        $this->validateCsrf($csrfToken);
 
         $output = $this->service->register($credentials);
         $request->session()->regenerate();
+        $request->session()->regenerateToken();
         return $this->response($output, "User registered and logged in");
     }
 
@@ -66,12 +79,11 @@ class UserController extends Controller {
      * 
      * @return array
      */
-    public function logout(Request $request) {
-        $csrfToken = $request->get("_csrfToken", "") ?? "";
-        $this->validateCsrf($csrfToken);
-
+    public function logout(Request $request)
+    {
         $output = $this->service->logout();
-        $request->session()->regenerate();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return $this->response($output);
     }
 }

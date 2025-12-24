@@ -19,6 +19,20 @@ use Exception;
 class UserService {
 
     /**
+     * Get the given user's profile
+     * 
+     * @param User $user
+     * 
+     * @return array
+     */
+    public function profile(User $user) {
+        return [
+            "stats" => [],
+            "notifications" => [],
+        ];
+    }
+
+    /**
      * Log in the user based on credentials
      * 
      * @param array $formData Credentials
