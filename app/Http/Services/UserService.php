@@ -8,6 +8,8 @@
 
 namespace App\Http\Services;
 
+use App\Http\Resources\StatCategoryResource;
+use App\Models\StatCategory;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -26,9 +28,15 @@ class UserService {
      * @return array
      */
     public function profile(User $user) {
+        $stats = StatCategoryResource::collection(
+            StatCategory::with("latestUserStat")
+                ->orderBy("created_at", "desc")
+                ->get()
+        );
+
         return [
-            "stats" => [],
-            "notifications" => [],
+            "stats" => $stats,
+            "settings" => [],
         ];
     }
 

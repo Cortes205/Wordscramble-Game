@@ -1,8 +1,13 @@
 <?php
+/**
+ * Factory for Stat Category creation
+ * 
+ * @author      Alan Cortes
+ * @version     1.0.0
+ */
 
 namespace Database\Factories;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +24,8 @@ class StatCategoryFactory extends Factory
     {
         return [
             "name" => $this->faker->word . " " . $this->faker->word,
-            "created_at" => Carbon::now("UTC")->format("Y-m-d H:i:s"),
-            "updated_at" => Carbon::now("UTC")->format("Y-m-d H:i:s"),
+            "created_at" => (new \DateTime())->format("Y-m-d H:i:s"),
+            "updated_at" => (new \DateTime())->format("Y-m-d H:i:s"),
             "active" => 1,
         ];
     }

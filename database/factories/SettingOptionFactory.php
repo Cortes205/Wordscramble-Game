@@ -1,6 +1,6 @@
 <?php
 /**
- * Factory for Notification creation
+ * Factory for Setting Option/Category creation
  * 
  * @author      Alan Cortes
  * @version     1.0.0
@@ -11,9 +11,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Notification>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SettingOption>
  */
-class NotificationFactory extends Factory
+class SettingOptionFactory extends Factory
 {
     /**
      * Define the model's default state.

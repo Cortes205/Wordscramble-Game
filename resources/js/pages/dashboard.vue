@@ -80,7 +80,7 @@ function getUserProfile() {
     proxy.$ajax
         .get("/jax/user/profile")
         .then(res => {
-            form.value = res.data
+            Object.assign(form, res.data.response)
         })
         .catch(err => {
             ElMessageBox.alert(

@@ -4,21 +4,29 @@
     @author     Alan Cortes
     @version    1.0.0
 -->
-
 <template>
-    <div v-if="items?.length" style="padding: 2%">
+    <div v-if="items?.length" class="card-container">
         <CardList
             :items="items"
             height="500px"
         >
             <template #header="{ item }">
-                {{ item.title }}
-            </template>
-            <template #body="{ item }">
                 {{ item.name }}
             </template>
+            <template #body="{ item }">
+                <!-- If item.latest doesn't exist, no divs will be created -->
+                <div v-if="item.latest">
+                    <div v-for="value, key in item.latest.info">
+                        <i>{{ key }}:</i>&nbsp;
+                        {{ value }}
+                    </div>
+                </div>
+                <div v-else>
+                    No stats yet!
+                </div>
+            </template>
             <template #footer="{ item }">
-                {{ item.desc }}
+                {{ item.latest ? "Last Updated: " + item.latest.createdAt : "" }}
             </template>
         </CardList>
     </div>
@@ -39,3 +47,11 @@ const props = defineProps({
     },
 })
 </script>
+
+<style scoped>
+.card-container {
+    padding: 2%;
+    width: 100%;
+    overflow-x: auto;
+}
+</style>

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Factory for Setting Value creation
+ * 
+ * @author      Alan Cortes
+ * @version     1.0.0
+ */
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -17,7 +22,8 @@ class SettingValueFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "created_at" => (new \DateTime())->format("Y-m-d H:i:s"),
+            "updated_at" => (new \DateTime())->format("Y-m-d H:i:s"),
         ];
     }
 }

@@ -32,10 +32,14 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->respond(function (Response $response, Throwable $throwable, Request $request) {
             $code = $response->getStatusCode();
 
+            $path = $request->getPathInfo();
+            $isJaxRequest = str_starts_with($path, "/jax");
+
             switch ($code) {
                 case 404:
-                    return Inertia::render("404");
+                    return $isJaxRequest ? $response : Inertia::render("404");
                 case 401:
+                    return $isJaxRequest ? $response : redirect("/");
                 case 419:
                     return redirect("/");
             }

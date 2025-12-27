@@ -9,7 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Session\TokenMismatchException;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
 abstract class Controller
@@ -17,15 +17,15 @@ abstract class Controller
     /**
      * Create a centralized formatted response for the front end
      * 
-     * @param array $data
+     * @param array|AnonymousResourceCollection $data
      * @param string $message
      * 
      * @return array
      */
-    protected function response(array $data, string $message = "") {
+    protected function response(array|AnonymousResourceCollection $data = [], string $message = "") {
         return [
             "message" => $message,
-            "data" => $data,
+            "response" => $data,
         ];
     }
 
@@ -40,21 +40,5 @@ abstract class Controller
          */
         $user = Auth::getUser();
         return $user;
-    }
-
-    /**
-     * Validate the passed CSRF Token
-     * 
-     * @param string $csrfToken
-     * 
-     * @throws TokenMismatchException
-     * @return void
-     */
-    protected function validateCsrf(string $csrfToken) {
-        $token = csrf_token();
-
-        if ($csrfToken !== $token) {
-            throw new TokenMismatchException("CSRF token mismatch");
-        }
     }
 }

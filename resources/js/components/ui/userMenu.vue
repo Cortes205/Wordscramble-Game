@@ -9,25 +9,23 @@
         <el-popover
             v-if="!isErrorPage"
             placement="bottom"
+            width="500"
         >
             <template #reference>
-                <el-icon size="25px" v-if="notifications?.length"><BellFilled /></el-icon>
+                <el-icon size="25px" v-if="hasNotifications"><BellFilled /></el-icon>
                 <el-icon size="25px" v-else><Bell /></el-icon>
             </template>
             <div>
-                <div v-for="notification in notifications">
-                    
-                </div>
-                <div v-if="!notifications?.length" class="al-center">
-                    No Notifications
-                </div>
+                <NotificationWidget 
+                    @change="onNotificationChange"
+                />
             </div>
         </el-popover>
         <el-popover
             placement="bottom"
         >
             <template #reference>
-                    <el-icon size="25px" class="filled-icon"><MoreFilled /></el-icon>
+                <el-icon size="25px" class="filled-icon"><MoreFilled /></el-icon>
             </template>
             <div class="al-center">
                 <el-button v-loading="loggingOut" size="small" @click="onLogout">Logout</el-button>
@@ -39,14 +37,10 @@
 <script setup>
 import { getCurrentInstance, ref } from 'vue'
 import { Bell, BellFilled, MoreFilled } from '@element-plus/icons-vue'
+import NotificationWidget from './notificationWidget.vue'
 const { proxy } = getCurrentInstance()
 
 const props = defineProps({
-    notifications: {
-        type: Array,
-        default: () => [],
-        required: false,
-    },
     isErrorPage: {
         type: Boolean,
         default: false,
@@ -54,7 +48,12 @@ const props = defineProps({
     },
 })
 
+const hasNotifications = ref(false)
 const loggingOut = ref(false)
+
+function onNotificationChange(change) {
+    hasNotifications.value = change !== "clear"
+}
 
 function onLogout() {
     if (loggingOut.value) {

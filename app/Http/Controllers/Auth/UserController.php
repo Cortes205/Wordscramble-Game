@@ -25,7 +25,7 @@ class UserController extends Controller {
     }
 
     /**
-     * Route: /profile - Get the current user's profile
+     * Route: /profile - GET - Get the current user's profile
      * 
      * @param int $userId
      * 
@@ -39,7 +39,7 @@ class UserController extends Controller {
     }
 
     /**
-     * Route: /login - Authenticate the user and their inputted credentials
+     * Route: /login - POST - Authenticate the user and their inputted credentials
      * 
      * @param Request $request
      * 
@@ -56,7 +56,7 @@ class UserController extends Controller {
     }
 
     /**
-     * Route: /register - Register and log in a user
+     * Route: /register - POST - Register and log in a user
      * 
      * @param Request $request
      * 
@@ -73,7 +73,7 @@ class UserController extends Controller {
     }
 
     /**
-     * Route: /logout - Log the current user out
+     * Route: /logout - POST - Log the current user out
      * 
      * @param Request $request
      * 
